@@ -73,7 +73,7 @@ PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
 
 ALL_INCLUDES_EXCEPT:=-path $(PD_DRIVER_DIR)               \
                   -o -not -name "configuration.h"
-ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)        
+ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)
 # Find-all's used for formatting; have to exclude external modules
 ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
@@ -301,7 +301,7 @@ INCLUDES=-I$(APP_INC_DIR)                    \
           ${patsubst %,-I%,${THREADS_INCLUDE_DIRS}} \
           ${patsubst %,-I%,${DRIVERS_INCLUDE_DIRS}} \
           ${patsubst %,-I%,${BRIEFLZ_INCLUDE_DIRS}} \
-          ${patsubst %,-I%,${MIDDLEWARES_INCLUDE_DIRS}} 
+          ${patsubst %,-I%,${MIDDLEWARES_INCLUDE_DIRS}}
 
 ASM_INC=$(INCLUDES)
 
@@ -354,6 +354,13 @@ GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT
 ifdef swd_enable
 GLOBAL_DEFINES+=-DSWD_ENABLE
 endif
+
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_V2_MODELS)))
+ifdef ws2812b_enable
+	GLOBAL_DEFINES += -DWS2812B_ENABLE
+endif
+endif
+
 
 # Libs -------------------------------------------------------------------------
 LIBS=
