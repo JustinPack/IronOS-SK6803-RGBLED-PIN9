@@ -11,14 +11,7 @@ jobs:
       matrix:
         model:
           [
-            "TS100",
-            "TS80",
-            "TS80P",
-            "Pinecil",
-            "MHP30",
             "Pinecilv2",
-            "S60",
-            "TS101",
           ]
       fail-fast: true
 
@@ -40,7 +33,7 @@ jobs:
         run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
-        run: cd source && ./build.sh -m ${{ matrix.model }}
+        run: cd source && ./build.sh -m ${{ matrix.model }} ws2812b_enable=1
 
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
