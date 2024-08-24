@@ -32,22 +32,7 @@ public:
       for (int x = 0; x < 8; x++) {
         ((GPIO_TypeDef *)WS2812_GPIO_Port)->BSRR = WS2812_Pin;
         if ((leds_colors[i] & (1 << (7 - x))) == (1 << (7 - x))) {
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
+          __asm__ __volatile__("nop"); // T1H ~ 0.64 µs (typical)
           __asm__ __volatile__("nop");
           __asm__ __volatile__("nop");
           __asm__ __volatile__("nop");
@@ -63,27 +48,11 @@ public:
           __asm__ __volatile__("nop");
           __asm__ __volatile__("nop");
         } else {
-
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
-          __asm__ __volatile__("nop");
+          __asm__ __volatile__("nop"); // T0H ~ 0.32 µs (typical)
           __asm__ __volatile__("nop");
         }
         ((GPIO_TypeDef *)WS2812_GPIO_Port)->BSRR = (uint32_t)WS2812_Pin << 16u;
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
-        __asm__ __volatile__("nop");
+        __asm__ __volatile__("nop"); // T1L or T0L ~ 0.58 µs (typical)
         __asm__ __volatile__("nop");
         __asm__ __volatile__("nop");
         __asm__ __volatile__("nop");
